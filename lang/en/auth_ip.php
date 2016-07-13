@@ -25,10 +25,7 @@
  * @copyright 2013 onwards Servei de Recursos Educatius (http://www.sre.urv.cat)
  */
 
-$string['auth_ipdescription'] = 'Auth plugin restricting login by the given IPs';
-$string['auth_ipexampleips'] = 'List of IPs in comma-separated format. Examples: X.X.X.X o X.X.X.X,Y.Y.Y.Y';
-$string['auth_ipmailsubject'] = 'IPs changed on authentication plugin by IP';
-$string['auth_ipmailtext'] = 'Accepted IPs for the authentication plugin by IP have been updated.';
+$string['auth_ipdescription'] = 'Put every entry on one line. Valid entries are either full IP address (such as <b>192.168.10.1</b>) which matches a single host; or partial address (such as <b>192.168</b>) which matches any address starting with those numbers; or CIDR notation (such as <b>231.54.211.0/20</b>); or a range of IP addresses (such as <b>231.3.56.10-20</b>) where the range applies to the last part of the address. Text domain names (like \'example.com\') are not supported. IPV6 address are not supported. Blank lines are not supported.';
 $string['auth_ipvalidips'] = 'Valid IPs';
 $string['auth_ipcheckbeforelogin'] = 'Check IP before logging in';
 $string['auth_ipcheckbeforelogin_desc'] = 'If this setting is enabled then users will see error message before they saw a login page. You will be able to log out  anyone currently logged in who\'s ip address doesn\'t match valid IPs.';

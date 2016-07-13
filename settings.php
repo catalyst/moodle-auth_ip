@@ -50,7 +50,7 @@ if ($ADMIN->fulltree) {
 
     $settings->add(new admin_setting_configiplist('auth_ip/valid_ips',
         new lang_string('auth_ipvalidips', 'auth_ip'),
-        new lang_string('ipblockersyntax', 'admin'), ''));
+        new lang_string('auth_ipdescription', 'auth_ip'), ''));
 
     $settings->add(new admin_setting_configselect('auth_ip/check_before_login',
         get_string('auth_ipcheckbeforelogin', 'auth_ip'),
