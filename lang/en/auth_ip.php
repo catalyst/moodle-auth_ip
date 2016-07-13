@@ -43,4 +43,5 @@ $string['auth_iplogoutinprogress'] = 'Logging out active users ';
 $string['auth_iplogoutdone'] = 'Completed. Total users: {$a}.';
 $string['auth_iplogoutdescription'] = 'You can logout anyone currently logged in who\'s ip address doesn\'t match valid IPs. <b>This will not affect your current user session.</b> <br />Total number of all active users: {$a}';
 $string['auth_iplogoutwarning'] = 'Your IP {$a} is not in Valid IPs list. You will not be able to login once you are logged out.';
+$string['auth_ipclistatuschanged'] = 'The setting "Check IP before logging in" is set to {$a}';
 $string['pluginname'] = 'Authentication by IP';
