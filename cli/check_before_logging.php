@@ -52,8 +52,8 @@ if ($options['help'] || (empty($options['enable']) && empty($options['disable'])
 Command line script to enable/disable \"Check IP before logging in\" setting for auth/ip plugin.
 
 Options:
---enable       No interactive questions or confirmations
---disable      Upgrade even if the version is not marked as stable yet,
+--enable       Enable the setting
+--disable      Disable the setting
 -h, --help     Print out this help
 
 Example:
