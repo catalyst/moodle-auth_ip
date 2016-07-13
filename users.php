@@ -60,7 +60,7 @@ if ($action === 'remove') {
     echo $output->footer();
     exit;
 } else {
-    echo auth_ip_renderer::get_your_ip_not_in_range_error_message();
+    echo $output->get_your_ip_not_in_range_error_message();
     echo $output->get_user_logout_description($auth->count_active_sessions());
     echo $output->single_button(new moodle_url($PAGE->url, array('action' => 'remove')), get_string('auth_iplogoutbutton', 'auth_ip'), 'post');
     echo $output->footer();

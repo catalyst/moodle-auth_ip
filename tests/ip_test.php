@@ -27,8 +27,17 @@ class auth_ip_testcase extends advanced_testcase {
      */
     protected $authplugin;
 
+    /**
+     * An instance of auth_ip_renderer class.
+     * @var auth_ip_renderer
+     */
+    protected $renderer;
+
     protected function setUp() {
+        global $PAGE;
+
         $this->authplugin = new auth_plugin_ip();
+        $this->renderer = $PAGE->get_renderer('auth_ip');
         $this->resetAfterTest(true);
     }
 
@@ -110,7 +119,7 @@ class auth_ip_testcase extends advanced_testcase {
      * Test that placeholder data is correct.
      */
     public function test_placeholders_data() {
-        $placeholders = auth_ip_renderer::get_placeholders_data();
+        $placeholders = $this->renderer->get_placeholders_data();
 
         $this->assertTrue(is_array($placeholders));
         $this->assertEquals(2, count($placeholders));
@@ -122,7 +131,7 @@ class auth_ip_testcase extends advanced_testcase {
      * Test valid_ips placeholder if valid_ips configuration is not set.
      */
     public function test_valid_ips_placeholder_if_config_is_not_set() {
-        $placeholders = auth_ip_renderer::get_placeholders_data();
+        $placeholders = $this->renderer->get_placeholders_data();
 
         $expected = '';
         $actual = $placeholders['[[valid_ips]]'];
@@ -135,7 +144,7 @@ class auth_ip_testcase extends advanced_testcase {
      */
     public function test_valid_ips_placeholder_if_config_is_set() {
         set_config('valid_ips', '192.168.1.1, 192.168.1.2', 'auth_ip');
-        $placeholders = auth_ip_renderer::get_placeholders_data();
+        $placeholders = $this->renderer->get_placeholders_data();
 
         $expected = '192.168.1.1, 192.168.1.2';
         $actual = $placeholders['[[valid_ips]]'];
@@ -148,7 +157,7 @@ class auth_ip_testcase extends advanced_testcase {
      */
     public function test_your_ip_placeholder_value() {
         $_SERVER['HTTP_CLIENT_IP'] = '192.168.1.2';
-        $placeholders = auth_ip_renderer::get_placeholders_data();
+        $placeholders = $this->renderer->get_placeholders_data();
 
         $expected = '192.168.1.2';
         $actual = $placeholders['[[your_ip]]'];
@@ -160,15 +169,12 @@ class auth_ip_testcase extends advanced_testcase {
      * Test that renderer can replace placeholders in a message.
      */
     public function test_render_replace_placeholders() {
-        global $PAGE;
-
         set_config('valid_ips', '192.168.1.1', 'auth_ip');
         $_SERVER['HTTP_CLIENT_IP'] = '192.168.1.3';
         $message = "Your IP is [[your_ip]] [[your_ip]] and valid ips are [[valid_ips]] [[valid_ips]]. Other placeholder [[*]] [[vi]] [[ip]]";
-        $renderer = $PAGE->get_renderer('auth_ip');
 
         $expected = "Your IP is 192.168.1.3 192.168.1.3 and valid ips are 192.168.1.1 192.168.1.1. Other placeholder [[*]] [[vi]] [[ip]]";
-        $actual = $renderer->replace_placeholders($message);
+        $actual = $this->renderer->replace_placeholders($message);
 
         $this->assertEquals($expected, $actual);
     }
@@ -177,12 +183,8 @@ class auth_ip_testcase extends advanced_testcase {
      * Test that render display an error message.
      */
     public function test_render_displays_error_message() {
-        global $PAGE;
-
-        $renderer = $PAGE->get_renderer('auth_ip');
-
         $expected = "<div class=\"box generalbox\">Test error message</div>";
-        $actual   = $renderer->render_error_message('Test error message');
+        $actual   = $this->renderer->render_error_message('Test error message');
 
         $this->assertEquals($expected, $actual);
     }

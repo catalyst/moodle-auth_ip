@@ -49,7 +49,7 @@ class auth_ip_renderer extends plugin_renderer_base {
      *
      * @return array An array of placeholders.
      */
-    public static function get_placeholders_data() {
+    public function get_placeholders_data() {
         $config = get_config('auth_ip');
 
         return array(
@@ -66,11 +66,10 @@ class auth_ip_renderer extends plugin_renderer_base {
      * @return string A message after replacing the placeholders.
      */
     public function replace_placeholders($message) {
-        $placeholders = array_keys(self::get_placeholders_data());
-        $values = array_values(self::get_placeholders_data());
+        $placeholders = array_keys($this->get_placeholders_data());
+        $values = array_values($this->get_placeholders_data());
 
         $message = str_replace($placeholders, $values, $message);
-
 
         return $message;
     }
@@ -80,7 +79,7 @@ class auth_ip_renderer extends plugin_renderer_base {
      *
      * @return string HTML link.
      */
-    public static function get_user_logout_page_link() {
+    public function get_user_logout_page_link() {
         $url = new moodle_url('/auth/ip/users.php');
         $link = html_writer::link($url, get_string('auth_iplogoutlink', 'auth_ip'));
 
@@ -92,10 +91,10 @@ class auth_ip_renderer extends plugin_renderer_base {
      *
      * @return string
      */
-    public static function get_settings_user_logout_page_link_description() {
-        global $OUTPUT;
-
-        return $OUTPUT->notification(get_string('auth_iplogoutuserstext', 'auth_ip', self::get_user_logout_page_link()), 'info');
+    public function get_settings_user_logout_page_link_description() {
+        return $this->output->notification(
+            get_string('auth_iplogoutuserstext', 'auth_ip', $this->get_user_logout_page_link()),
+            'info');
     }
 
     /**
@@ -103,9 +102,7 @@ class auth_ip_renderer extends plugin_renderer_base {
      *
      * @return string
      */
-    public static function get_your_ip_not_in_range_error_message() {
-        global $OUTPUT;
-
+    public function get_your_ip_not_in_range_error_message() {
         $html = '';
 
         $config = get_config('auth_ip');
@@ -113,7 +110,10 @@ class auth_ip_renderer extends plugin_renderer_base {
         $list = isset($config->valid_ips) ? $config->valid_ips : '';
 
         if (!auth_plugin_ip::is_ip_in_list($list, $ip)) {
-            $html = $OUTPUT->notification(get_string('auth_iplogoutwarning', 'auth_ip', $ip), 'error');
+            $html = $this->output->notification(
+                get_string('auth_iplogoutwarning', 'auth_ip', $ip),
+                'error'
+            );
         }
 
         return $html;
